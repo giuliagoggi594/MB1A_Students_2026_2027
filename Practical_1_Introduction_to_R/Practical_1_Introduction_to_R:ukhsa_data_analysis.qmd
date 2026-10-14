@@ -1,0 +1,23 @@
+---
+title: "Practical_1_Introduction_to_R/ukhsa_data_analysis"
+author: "Giulia Goggi"
+---
+```{r}
+library(tidyverse)
+library(gt)
+
+antibiotics <- read_csv("Antibiotic Consumption Data.csv")
+```
+```{r}
+gt(head(antibiotics))
+```
+
+```{r}
+ggplot(antibiotics, aes(x = date, y = metric_value)) + geom_line(colour = 'steelblue', linewidth = 1.5) + labs(title = "Antibiotic consumption over time", x = "Date", y = "Metric value of consumption") + theme_minimal(base_size = 12, ink = "slateblue4", paper = "#f2f0ef") + theme(plot.title = element_text(size = 18, face = "bold"))
+```
+
+
+
+
+
+

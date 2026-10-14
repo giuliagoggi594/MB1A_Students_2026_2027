@@ -1,0 +1,48 @@
+---
+title: "prac1_exercises"
+author: "Giulia Goggi"
+---
+# Functions
+Rounding with the round() function
+
+```{r}
+round(3.14159, digits = 2)
+```
+
+# Arguments
+Changing the argument order
+
+```{r}
+print(rep(5, 7))
+# Change order
+print(rep(times = 7, x = 5))
+```
+
+# Variables
+Types of variables
+
+```{r}
+number <- 12
+text <- "Hello"
+boolean <- TRUE
+
+# Check variable type
+print(class(number))
+print(class(text))
+print(class(boolean))
+```
+
+Variables example for an experiment
+
+```{r}
+cell_ID_1 = 'CX1'
+cell_ID_2 = 'CX2'
+treated_1 = TRUE
+treated_2 = FALSE
+num_cells_before_1 = 5415
+num_cells_before_2 = 8123
+num_cells_after_1 = 1432
+num_cells_after_2 = 7543
+```
+
+

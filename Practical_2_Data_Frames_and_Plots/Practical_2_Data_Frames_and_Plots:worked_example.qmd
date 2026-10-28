@@ -1,0 +1,55 @@
+---
+title: "Worked example"
+author: "Giulia Goggi"
+---
+
+```{r}
+library(gt)
+library(tidyverse)
+library(maps)
+
+breeding_sites <- read.csv('data/breeding_site_locations.csv')
+gt(breeding_sites)
+```
+
+```{r}
+colnames(breeding_sites)
+glimpse(breeding_sites)
+
+print(nrow(breeding_sites))
+print(ncol(breeding_sites))
+print(dim(breeding_sites))
+```
+
+```{r}
+migration_sites <- read.csv('data/migratory_connectivity_dataset.csv')
+gt(head(migration_sites))
+```
+
+```{r}
+glimpse(migration_sites)
+```
+
+```{r}
+breeding_filtered <- breeding_sites |> 
+  select(Site, Longitude, Latitude) |>
+  distinct() |>
+  rename(Breeding_longitude = Longitude, Breeding_latitude = Latitude)
+gt(breeding_filtered)
+```
+
+```{r}
+migration_filtered <- migration_sites |>
+  select(Site, winterLongitude, winterLatitude, pslon, pslat, iblon, iblat, awestlon, awestlat) |>
+  distinct() |>
+  rename(Winter_Longitude = winterLongitude, Winter_Latitude = winterLatitude, Stopover_Longitude = pslon, Stopover_Latitude = pslat, Iberian_Longitude = iblon, Iberian_Latitude = iblat, Westmost_Longitude = awestlon, Westmost_Latitude = awestlat)
+gt(migration_filtered)
+```
+
+```{r}
+breeding_no_spain = breeding_filtered |> filter(Site != 'Spain')
+gt(breeding_no_spain)
+migration_no_spain = migration_filtered |> filter(Site != 'Spain')
+gt(migration_no_spain)
+```
+

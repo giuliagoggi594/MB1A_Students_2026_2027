@@ -1,0 +1,51 @@
+---
+title: "Visualisation exercise"
+author: "Giulia Goggi"
+---
+
+```{r}
+library(tidyverse)
+library(gt)
+library(janitor)
+library(lubridate)
+
+locations <- read_csv("data/movebank_data.csv") |>
+  clean_names() |>
+  mutate(date = as_date(timestamp))
+
+gt(head(locations))
+```
+
+```{r}
+loc_selected <- locations |>
+  select(date, individual_local_identifier, location_long, location_lat)
+
+gt(head(loc_selected))
+```
+
+```{r}
+loc_sel_group <- loc_selected |>
+  group_by(date, individual_local_identifier)
+
+loc_summarised <- loc_sel_group |>
+  summarise(Longitude = median(location_long, na.rm = TRUE),
+            Latitude = median(location_lat, na.rm = TRUE))
+gt(head(loc_summarised))
+```
+
+```{r}
+min_long = loc_summarised |> pull(Longitude) |> min()
+max_long = loc_summarised |> pull(Longitude) |> max()
+min_lat = loc_summarised |> pull(Latitude) |> min()
+max_lat = loc_summarised |> pull(Latitude) |> max()
+
+ggplot(loc_summarised, aes(x = Longitude, y = Latitude, color = individual_local_identifier)) +
+  geom_point(size = 2) +
+  annotation_borders(linewidth = 0.2) +
+  coord_quickmap(xlim = c(min_long - 0.5, max_long + 0.5), ylim = c(min_lat - 0.2, max_lat + 0.2)) +
+  ggtitle('Seals location identification') + 
+  xlab("Longitude (°)") +
+  ylab("Latitude (°)") +
+  theme_minimal()
+```
+
